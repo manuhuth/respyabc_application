@@ -83,7 +83,7 @@ This paper serves as example showcase how \href{https://respyabc.readthedocs.io/
 
 \section{Introduction} % (fold)
 \label{sec:introduction}
-respyabc has been written by Manuel Huth for the courses Effective Programming Practices for Economists and Scientific Comuputing for Economists which are taught within the University of Bonn's Master in Economcis. It builds on the work of respy \citep{Gabler2020} and pyabc \citep{klinger2018} to provide a likelihood-free inference framework to infer parameters from finite-horizon dynamic discrete choice models. This short paper aims to illustrate how respyabc can be integrated into an exemplary project workflow. This is done by using the the model of \citet{keane1994} and only varying over the discount factor, whereby all other coefficients are assumed to be known. For more information on respyabc, visit its \href{https://respyabc.readthedocs.io/en/latest/index.html}{documentation} or its source code on \href{https://github.com/manuhuth/respyabc}{GitHub}. Codes of this particular example project can be found at XXXXGitHub-LinkXXXXX. The template of the latter project has been provided by \citet{GaudeckerEconProjectTemplates}.
+respyabc has been written by Manuel Huth for the courses Effective Programming Practices for Economists and Scientific Comuputing for Economists which are taught within the University of Bonn's Master in Economcis. It builds on the work of respy \citep{Gabler2020} and pyabc \citep{klinger2018} to provide a likelihood-free inference framework to infer parameters from finite-horizon dynamic discrete choice models. This short paper aims to illustrate how respyabc can be integrated into an exemplary project workflow. This is done by using the the model of \citet{keane1994} and only varying over the discount factor, whereby all other coefficients are assumed to be known. For more information on respyabc, visit its \href{https://respyabc.readthedocs.io/en/latest/index.html}{documentation} or its source code on \href{https://github.com/manuhuth/respyabc}{GitHub}. Codes of this particular example project can be found at \href{https://github.com/manuhuth/respyabc_application}{GitHub}. The template of the latter project has been provided by \citet{GaudeckerEconProjectTemplates}.
 
 The paper is structured as follows. Section \ref{sec:stat_description} introduces the two methods Approximate Bayesian Computing (ABC) and Sequential Monte-Carlo (SMC) sampling, Section \ref{sec:analysis} shows the results of the simulations and Section \ref{sec:introduction} gives a brief summary.
 
@@ -142,7 +142,8 @@ To compute the point estimate for a given population, we use the magnitudes of e
 \end{subfigure}%
 
 \end{figure}
-Describe results
+We see that the model using the choice frequencies as summary statistics ended after 5 runs whereas the model using the wage moments for the summary statistics ended after the maximum of 10 runs. However, the latter also estimates the parameter that was used to simulate the data accurately after the fifth run. Thus, it seems as if the minimum epsilon has been chosen too high for the wage moments. \\
+For both graphs we observe that the accuracy to the true parameter increases and the length of the credibility intervals decrease with every run.
 \subsection{Kernel Densities}
 Kernel densities estimates are computed to obtain estimates for the density functions of the posterior distribution.
 \label{subsec:kernel_densities}
@@ -161,9 +162,11 @@ Kernel densities estimates are computed to obtain estimates for the density func
 \end{subfigure}%
 
 \end{figure}
-Describe results
+We observe that the kernel densities become more and more centralized around the simulated value for later runs.
 \section{Conclusion}
 \label{sec:conclusion}
+This short work shows that respyabc yields accurate estimates for one parameter inference of the discount factor in the model presented by \citet{keane1994}. Moreover, the choice of the summary statistics does influence the choice of the respective minimum epsilon. The sample averages, computed as weighted averages over the respective samples become better with increasing runs. Therefore, the choice of the maxmimum runs should be chosen carefully. \\
+For future analysis there is a wide spectrum of potential issues that can be addressed. The sue of multiple parameters as well as model selection are desirbale extensions.
 
 
 

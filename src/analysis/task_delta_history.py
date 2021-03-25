@@ -27,8 +27,8 @@ def task_get_history_delta_choice_frequencies(produces):
         descriptives="choice_frequencies",
     )
 
-    population_size = 2
-    max_nr_populations = 2
+    population_size = 500
+    max_nr_populations = 10
     minimum_epsilon = 0.05
     delta_prior_low = 0.9
     delta_prior_length = 0.09
@@ -66,8 +66,8 @@ def task_get_history_delta_wage_moments(produces):
         descriptives="wage_moments",
     )
 
-    population_size = 2
-    max_nr_populations = 2
+    population_size = 500
+    max_nr_populations = 10
     minimum_epsilon = 0.05
     delta_prior_low = 0.9
     delta_prior_length = 0.09
