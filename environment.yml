@@ -2,6 +2,8 @@ name: respyabc
 channels:
   - pytask
   - conda-forge
+  - opensourceeconomics
+  - manuhuth
 
 dependencies:
   - conda-build
@@ -12,6 +14,8 @@ dependencies:
   - pip
   - pytask>=0.0.11
   - pytask-latex>=0.0.10
+  - respy
+  - respyabc
 
 
   - pytest
@@ -30,4 +34,5 @@ dependencies:
     - sphinx-autobuild
     - sphinx-rtd-theme
     - sphinxcontrib-bibtex
+    - pyabc
 

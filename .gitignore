@@ -24,6 +24,7 @@
 *.pdfsync
 *.prj
 *.pyc
+*.respy
 *.run.xml
 *.snm
 *.sublime-*

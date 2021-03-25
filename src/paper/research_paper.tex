@@ -10,11 +10,11 @@
 % \usepackage{chngcntr}
 \usepackage{amsmath, amssymb, amsfonts, amsthm, bm}
 \usepackage{caption}
+\usepackage{subcaption}
 \usepackage{mdwlist}
 \usepackage{xfrac}
 \usepackage{setspace}
 \usepackage{xcolor}
-\usepackage{subcaption}
 \usepackage{minibox}
 % \usepackage{pdf14} % Enable for Manuscriptcentral -- can't handle pdf 1.5
 % \usepackage{endfloat} % Enable to move tables / figures to the end. Useful for some submissions.
@@ -43,13 +43,13 @@
 \usepackage[unicode=true]{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=black,
+    linkcolor=blue,
     anchorcolor=black,
     citecolor=black,
     filecolor=black,
     menucolor=black,
     runcolor=black,
-    urlcolor=black
+    urlcolor=blue
 }
 
 
@@ -63,12 +63,12 @@
 
 \begin{document}
 
-\title{respyabc application\thanks{Manuel Huth, University of Bonn. Email: \href{mailto:s6mahuth@uni-bonn.de}{\nolinkurl{s6mahuth [at] uni-bonn [dot] de}}.}}
+\title{respyabc example\thanks{Manuel Huth, University of Bonn. Email: \href{mailto:s6mahuth@uni-bonn.de}{\nolinkurl{s6mahuth@uni-bonn.de}}.}}
 
 \author{Manuel Huth}
 
 \date{
-    {\bf Preliminary -- please do not quote}
+    {Supplementary material for \href{https://respyabc.readthedocs.io/en/latest/index.html}{respyabc}}
     \\[1ex]
     \today
 }
@@ -77,40 +77,97 @@
 
 
 \begin{abstract}
-    Some abstract here.
+This paper serves as example showcase how \href{https://respyabc.readthedocs.io/en/latest/index.html}{respyabc} can be integrated into a researchers workflow. respyabc is a package that uses a likelihood-free inference framework to infer parameters from finite-horizon dynamic discrete choice models simulated with respy. Inference is conducted using Approximate Bayesian Computing and a Sequential Monte-Carlo algorithm via pyABC.
 \end{abstract}
 \clearpage
 
 \section{Introduction} % (fold)
 \label{sec:introduction}
+respyabc has been written by Manuel Huth for the courses Effective Programming Practices for Economists and Scientific Comuputing for Economists which are taught within the University of Bonn's Master in Economcis. It builds on the work of respy \citep{Gabler2020} and pyabc \citep{klinger2018} to provide a likelihood-free inference framework to infer parameters from finite-horizon dynamic discrete choice models. This short paper aims to illustrate how respyabc can be integrated into an exemplary project workflow. This is done by using the the model of \citet{keane1994} and only varying over the discount factor, whereby all other coefficients are assumed to be known. For more information on respyabc, visit its \href{https://respyabc.readthedocs.io/en/latest/index.html}{documentation} or its source code on \href{https://github.com/manuhuth/respyabc}{GitHub}. Codes of this particular example project can be found at XXXXGitHub-LinkXXXXX. The template of the latter project has been provided by \citet{GaudeckerEconProjectTemplates}.
 
-If you are using this template, please cite this item from the references: \citet{GaudeckerEconProjectTemplates}
+The paper is structured as follows. Section \ref{sec:stat_description} introduces the two methods Approximate Bayesian Computing (ABC) and Sequential Monte-Carlo (SMC) sampling, Section \ref{sec:analysis} shows the results of the simulations and Section \ref{sec:introduction} gives a brief summary.
 
-\citet{Schelling69} example in the code is taken from \citet{StachurskiSargent13}
-
-The decision rule of an agent is the following:
-\input{formulas/decision_rule}
-
-\begin{figure}
-    \caption{Segregation by cycle in the baseline \citet{Schelling69} model as in the \citet{StachurskiSargent13} example}
-
-    \includegraphics[width=\textwidth]{../../bld/figures/schelling_baseline}
-
-\end{figure}
-
-
-\begin{figure}
-    \caption{Segregation by cycle in the baseline \citet{Schelling69} model, limiting the number of potential moves per period to two}
-
-    \includegraphics[width=\textwidth]{../../bld/figures/schelling_max_moves_2}
-
-\end{figure}
 
 % section introduction (end)
 
+\section{Statistical Description}
+\label{sec:stat_description}
+Assume that we have deterministic or stochastic model $\mathcal{M}$, which is a mapping from a $d$-dimensional parameter vector $\theta \in \Theta \subset \mathbb{R}^n$, with parameter space $\Theta$, to an output matrix $Y \in \mathbb{R}^{\tau \times n}$ such that $\mathcal{M}(\theta) = y$. In empirical economic models, one does usually observe a sample $Y^*$. Given any fixed $\theta$, the output is distributed according to the likelihood function $Y \sim f(Y^*| \theta)$, which depends on $\mathcal{M}$. \\
+Viewing the problem from a Bayesian point of view, we are interested in the likelihood of the parameters given the observed sample $Y^*$. This likelihood is reflected by the so called posterior distribution $p(\theta|Y^*)$. We can describe the posterior distribution in terms of the likelihood $f(Y^*| \theta)$ and the prior distribution $\pi(\theta)$
+\begin{align}
+    p(\theta|Y^*) = \frac{f(Y^*| \theta) \pi(\theta) }{\int f(Y^*| \theta') \pi(\theta') d\theta'}.
+\end{align}
+Note that the integral is just the unconditional distribution $p(Y^*)$ of the sample. For complicated $\mathcal{M}$, there is usually no closed form solution of the posterior and, thus, numerically algorithms must be applied to sample from it. Frequently used are Markov Chain Monte-Carlo (MCMC) methods or SMC sampling. \\
+Using computer algorithms is in many biological applications impossible or computationally too costly. Therefore, likelihood-free methods such as ABC can be applied to reach a suitable degree of approximation.
+
+
+\subsection{Approximate Bayesian Computing}
+\label{subsec:abc}
+The basic idea is to sample parameters $\theta$ from the prior distribution and to select the values of it such that the simulated data is close to the sample. This is done by defining a suitable distance  $d: \mathbb{R}^{t \times n} \times \mathbb{R}^{t \times n} \to \mathbb{R}$. A sample $Y$ is defined to be close to $Y^*$ if $d(Y^*, Y) < \epsilon$ for a fixed small $\epsilon > 0$
+\begin{align}
+    p(\theta|Y^*) = \frac{f(Y^*| \theta) \pi(\theta) }{p(Y^*)} \approx p_\epsilon(\theta|Y^*) =  \frac{\int  f(Y| \theta) \pi(\theta) 1_{\{d(Y^*,Y) < \epsilon\}} dy}{p(Y^*)},
+\end{align}
+such that $\lim\limits_{\epsilon \to 0} p_\epsilon(\theta|Y^*) = p(\theta|Y^*)$. The acceptance rate is off course very sensitive to the choice of $\epsilon$. On the one hand, if $\epsilon$ is too large the approximation error is too high and we tend to accept samples generated by parameters that are far away from the true ones. On the other hand, if $\epsilon$ is too small, we might decline too many samples and the algorithm has a hard time computing estimates. \\
+For running the ABC algorithm, it is useful to use efficient sample algorithms like MCMC-ABC or SMC schemes. The latter is used in pyABC and thus presented subsequently.
+
+
+\subsection{Sequential Monte Carlo}
+\label{subsec:smc}
+We define a set of distributions $\pi_{t}(\theta|d(Y^*,y) < \epsilon_t)$ for $t=0, 1, \dotsc, T$ and $\infty = \epsilon_0 > \epsilon_1 > \epsilon_2 > \dotsc > \epsilon_T$. Note that $d(Y^*,Y) < \infty = \epsilon_0$ for all $Y \in \mathbb{R}^{\tau \times n}$ and thus $\pi_{0}(\theta|d(Y^*,Y) < \epsilon_0) = \pi(\theta)$. \\
+Let $\theta^{(t)} = \begin{pmatrix} \theta^{(1, t)} & \dotsc & \theta^{(N, t)} \end{pmatrix}$ be an independently simulated sample that is conditional on the previous samples and simulated by $\theta^{(i, t)}|\theta^{(t-1)} \sim q_{it}$ for all $i = 1,\dotsc, T $. For $t=0$ we set $q_{it} = \pi(\theta)$. Moreover, each point $\theta^{(i, t)}$ is mapped to an importance weight
+\begin{align}
+    \omega^{(i,t)} \propto \frac{\pi(\theta^{(i,t)})}{q_{it}}
+\end{align}
+For the computational details see \citet{klinger2018} and the references cited therein.
+
+\section{Analysis}
+\label{sec:analysis}
+We examine how the point estimates, credibility intervals and kernel densities change across runs and summary statistics. We only focus on variation of the discount factor $\delta$ in this paper.
+\subsection{Point Estimates and Credibility Intervals}
+\label{subsec:point_estimates}
+To compute the point estimate for a given population, we use the magnitudes of each individual $i$ and weigh them by the computed importance weights $\omega^{(i)}$. For the credibility intervals, we compute the $\alpha/2$ and $1- \alpha/2$ percentiles of the sample taking the weights into account.  We do so for distances that are computed via choice frequencies of each period as summary statistics in Figure \ref{fig:choice_frequencies_ci} and for wage moments as summary statistics in Figure \ref{fig:wage_moments_ci}.
+\begin{figure}[h!]
+\caption{Credibility intervals for all respyabc runs.}
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includegraphics[width=\textwidth]{../../bld/figures/plot_delta_choice_frequencies_credibility_intervals.png}
+    \subcaption{Choice frequencies}
+  \label{fig:choice_frequencies_ci}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includegraphics[width=\textwidth]{../../bld/figures/plot_delta_wage_moments_credibility_intervals.png}
+    \subcaption{Wage moments}
+  \label{fig:wage_moments_ci}
+\end{subfigure}%
+
+\end{figure}
+Describe results
+\subsection{Kernel Densities}
+Kernel densities estimates are computed to obtain estimates for the density functions of the posterior distribution.
+\label{subsec:kernel_densities}
+\begin{figure}[h!]
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includegraphics[width=\textwidth]{../../bld/figures/plot_delta_choice_frequencies_kernel_density.png}
+    \subcaption{Choice frequencies}
+  \label{fig:kernel_density_ci}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includegraphics[width=\textwidth]{../../bld/figures/plot_delta_wage_moments_kernel_density.png}
+    \subcaption{Wage moments}
+  \label{fig:kernel_density_ci}
+\end{subfigure}%
+
+\end{figure}
+Describe results
+\section{Conclusion}
+\label{sec:conclusion}
 
 
 
+\newpage
 \setstretch{1}
 \printbibliography
 \setstretch{1.5}
