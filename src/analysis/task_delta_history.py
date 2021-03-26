@@ -32,7 +32,9 @@ def task_get_history_delta_choice_frequencies(produces):
     minimum_epsilon = 0.05
     delta_prior_low = 0.9
     delta_prior_length = 0.09
-    parameters_prior = {"delta_delta": [delta_prior_low, delta_prior_length]}
+    parameters_prior = {
+        "delta_delta": [[delta_prior_low, delta_prior_length], "uniform"]
+    }
 
     history = respyabc(
         model=compute_model,
@@ -71,7 +73,9 @@ def task_get_history_delta_wage_moments(produces):
     minimum_epsilon = 0.05
     delta_prior_low = 0.9
     delta_prior_length = 0.09
-    parameters_prior = {"delta_delta": [delta_prior_low, delta_prior_length]}
+    parameters_prior = {
+        "delta_delta": [[delta_prior_low, delta_prior_length], "uniform"]
+    }
 
     history = respyabc(
         model=compute_model,
