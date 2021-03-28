@@ -1,12 +1,11 @@
 Purpose
 =========
-This repository demonstrates how respyabc can be used in an exemplary workflow of a research project using pytask. All work is automated using the open-source software package pytask. For more information on pytask, have a look at its `documentation <https://pytask-dev.readthedocs.io/en/latest/>`_.
+This repository demonstrates how `respyabc <https://respyabc.readthedocs.io/en/latest/>`_ can be used in an exemplary workflow of a research project. Within the example project, one exemplary data set is simulated and evaluated using the routines implemented in respyabc.
+All work is automated using the open-source software package pytask. For more information on pytask, have a look at its `documentation <https://pytask-dev.readthedocs.io/en/latest/>`_.
 
 Directory structure
 ====================
-The root folder contains one folder ``src``.
-
-This folder contains the ``analysis``, ``documentation``, ``final`` and ``paper`` folders.
+The root folder contains one folder ``src``. This folder contains the ``analysis``, ``documentation``, ``final`` and ``paper`` folders.
 
 - ``analysis``: The analysis folder contains one file ``task_delta_history.py``. This file 	executes the short usecase of this example project, that is, two exemplary runs 			of ``respyabc.respyabc()``.
 - ``documentation``: The folder ``documentation`` hosts the files with which a html style documentation can be build using `sphinx <https://www.sphinx-doc.org/en/master/>`_.
@@ -17,16 +16,6 @@ There are no tests written in the directory of this example project since all fu
 
 Installing respyabc
 =====================
-With ``conda`` available on your path, installing and testing
-``respyabc`` is as simple as typing
-
-.. code-block:: bash
-
-    $ conda install -c manuhuth respyabc
-    $ python -c "import respyabc; respyabc.test()"
-
-For more information on the package check out respyabc at its `docs <https://respyabc.readthedocs.io/en/latest/>`_ or its GitHub `repository <https://github.com/manuhuth/respyabc>`_.
-
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
     :target: https://opensource.org/licenses/MIT
 
@@ -41,5 +30,14 @@ For more information on the package check out respyabc at its `docs <https://res
 
 .. image:: https://anaconda.org/manuhuth/respyabc/badges/version.svg
     :target: https://anaconda.org/manuhuth/respyabc
+With ``conda`` available on your path, installing and testing
+``respyabc`` is as simple as typing
+
+.. code-block:: bash
+
+    $ conda install -c manuhuth respyabc
+    $ python -c "import respyabc; respyabc.test()"
+
+For more information on the package check out respyabc at its `docs <https://respyabc.readthedocs.io/en/latest/>`_ or its GitHub `repository <https://github.com/manuhuth/respyabc>`_.
 
 
