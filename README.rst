@@ -14,6 +14,30 @@ The root folder contains one folder ``src``. This folder contains the ``analysis
 
 There are no tests written in the directory of this example project since all functions are already tested within respyabc.
 
+
+Getting started
+================
+In order to run this project on your local machine you need to clone it from the `repository <https://github.com/manuhuth/respyabc_application>`_, have Python installed and a modern LaTex distribution in order to compile .tex documents. After cloning the repository, it is highly recommended to create a new virtual environemnt from the environment.yml file in order to ensure that all package dependencies are installed.
+
+.. code-block:: bash
+
+    $ conda env create -f environment.yml
+    $ conda activate respyabc
+
+To run the project with pytask a user needs to create a ``conda.pth`` file in site-packages on her local machine. The easiest way doing so is to navigate to the root directory (the path to which the repository has been cloned) and type
+
+.. code-block:: bash
+
+    $ conda develop .
+
+Being inside the root directory one can simply run the project with pytask by typing
+
+.. code-block:: bash
+
+    $ pytask
+
+The project is created, run and tested on Linux-Pop!_OS 20.04 but is supposed to work on Windows and MacOS as well.
+
 Installing respyabc
 =====================
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
