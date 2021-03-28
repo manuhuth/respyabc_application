@@ -8,10 +8,10 @@ The root folder contains one folder ``src``.
 
 This folder contains the ``analysis``, ``documentation``, ``final`` and ``paper`` folders.
 
-	- ``analysis``: The analysis folder contains one file ``task_delta_history.py``. This file 	executes the short usecase of this example project, that is, two exemplary runs 			of ``respyabc.respyabc()``.
-	- ``documentation``: The folder ``documentation`` hosts the files with which a html style documentation can be build using `sphinx <https://www.sphinx-doc.org/en/master/>`_.
-	- ``final``: The folder ``final`` contains two python scripts ``task_plot_credibility_intervals.py`` and ``task_plot_kernel_density.py``. They use the data that is simulated within ``task_delta_history.py`` to create credibility intervals and kernel density estimation plots respectively. These plots are used within the document ``research_paper.tex``.
-	- ``paper``: This folder hosts the file ``research_paper.tex`` which consists of the Latex code for the actual paper. Furthermore, this folder contains the bibliography file ``refs.bib`` and a python script ``task_paper.py`` that automatically creates the paper PDF from ``research_paper.tex`` by running pytask.
+- ``analysis``: The analysis folder contains one file ``task_delta_history.py``. This file 	executes the short usecase of this example project, that is, two exemplary runs 			of ``respyabc.respyabc()``.
+- ``documentation``: The folder ``documentation`` hosts the files with which a html style documentation can be build using `sphinx <https://www.sphinx-doc.org/en/master/>`_.
+- ``final``: The folder ``final`` contains two python scripts ``task_plot_credibility_intervals.py`` and ``task_plot_kernel_density.py``. They use the data that is simulated within ``task_delta_history.py`` to create credibility intervals and kernel density estimation plots respectively. These plots are used within the document ``research_paper.tex``.
+- ``paper``: This folder hosts the file ``research_paper.tex`` which consists of the Latex code for the actual paper. Furthermore, this folder contains the bibliography file ``refs.bib`` and a python script ``task_paper.py`` that automatically creates the paper PDF from ``research_paper.tex`` by running pytask.
 
 There are no tests written in the directory of this example project since all functions are already tested within respyabc.
 
