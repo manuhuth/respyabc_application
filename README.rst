@@ -59,6 +59,9 @@ With ``conda`` available on your path, installing
 
 .. code-block:: bash
 
+    $ pip install pyabc
+    $ conda config --add channels conda-forge
+    $ conda install -c opensourceeconomics respy
     $ conda install -c manuhuth respyabc
 
 For more information on the package check out respyabc at its `docs <https://respyabc.readthedocs.io/en/latest/>`_ or its GitHub `repository <https://github.com/manuhuth/respyabc>`_.
