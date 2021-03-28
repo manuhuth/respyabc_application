@@ -54,13 +54,12 @@ Installing respyabc
 
 .. image:: https://anaconda.org/manuhuth/respyabc/badges/version.svg
     :target: https://anaconda.org/manuhuth/respyabc
-With ``conda`` available on your path, installing and testing
+With ``conda`` available on your path, installing
 ``respyabc`` is as simple as typing
 
 .. code-block:: bash
 
     $ conda install -c manuhuth respyabc
-    $ python -c "import respyabc; respyabc.test()"
 
 For more information on the package check out respyabc at its `docs <https://respyabc.readthedocs.io/en/latest/>`_ or its GitHub `repository <https://github.com/manuhuth/respyabc>`_.
 
